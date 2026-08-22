@@ -4,22 +4,23 @@
 
 A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin. A **「图」toggle** appears next to the composer's input bar. When enabled, long user messages (≥ threshold, default 600 chars) are rendered into text images (800×800 pages, exactly at the 384-token cap) and sent to the model instead of raw text — the model still sees the full content (every character is inside the images), while the input drops from tens of thousands of tokens to a few hundred or thousand. Two direct benefits follow:
 
-- **① input tokens drop ~4–5×, and so does the cost** — the conversation prefix before the message stays byte-identical, so **prompt-cache hits are unaffected**;
+- **① input tokens drop ~2–2.5× for CJK (more at smaller fonts), and so does the cost** — the conversation prefix before the message stays byte-identical, so **prompt-cache hits are unaffected**;
 - **② the context-window footprint shrinks dramatically** — the same window can carry dozens of times more content, leaving room for instructions, reasoning steps, and tool results, so long documents no longer get truncated and the model performs more reliably.
 
 [中文 README](./README.md) · [npm](https://www.npmjs.com/package/dsh-text2img-compress)
 
 ## Example
 
-The image below is the DeepSeek-OCR 2 abstract ([arXiv 2601.20552](https://arxiv.org/pdf/2601.20552)):
-**3,873 chars = 767 tokens** as text (measured with the DeepSeek-V3 tokenizer); rendered at **13px
-into a single 800×800 page it costs 384 tokens** (~**2×**):
+The image below is 《端午咸》("Duanwu Saltiness"), a Chinese prose demo published by DeepSeek
+([news250528](https://api-docs.deepseek.com/zh-cn/news/news250528)):
+**1,036 chars = 804 tokens** as text (measured with the DeepSeek-V3 tokenizer); at the default
+**18px the whole essay fits ONE 800×800 page = 384 tokens** (~**2.1×**):
 
 ![text2img rendered example page](assets/example-page.png)
 
-> Note: English prose gains ~1–2× (≈5 chars/token as text vs ≈10 chars per image token at 13px);
-> **CJK text gains 4–6×** (≈1 char/token as text, ≈1,250 chars per 18px page) — see the measured
-> figures under "How it works".
+> Note: measured CJK gain is **~2.1× @18px up to ~4× at 14px and below**; **English prose gains
+> ~1–2×** (≈5 chars/token as text vs ≈5.9 chars per image token) — see the measured figures
+> under "How it works".
 
 ## How it works
 
@@ -31,7 +32,7 @@ DeepSeek's vision API bills images at a fixed rate (see the official [image unde
 
 So raw text costs *N* tokens, while the same content rendered as 800×800 pages costs **384 per page**.
 
-**Measured (2026-08, `deepseek-v4-flash-vision-exp`, 18px):** the DeepSeek changelog (~9,000+ chars, full of dates, benchmark scores, model names, URLs) rendered to **7 pages ≈ 2,688 tokens vs ~10,000+ as text — about 4–5× compression**. Smaller fonts pack more (16px ≈ 1,600 chars/page, 18px ≈ 1,250 chars/page for CJK); the page cap defaults to **10** (configurable 1–20 in settings).
+**Measured (`deepseek-v4-flash-vision-exp`, 18px):** for 《端午咸》 (see the example above) — **1,036 chars = 804 tokens** as text (DeepSeek-V3 tokenizer) → **1 page = 384 tokens (~2.1×)**. Real gains depend on font size and language: CJK ~2–2.5× at 18px and up to ~4× at 14px or below (≈2,300 chars/page); English prose ~1–2× (≈5 chars/token as text vs ≈5.9 chars per image token). The page cap defaults to **10** (configurable 1–20 in settings).
 
 ## Install
 

@@ -1,23 +1,27 @@
 // Regenerate assets/example-page.png — the plugin's own renderer output.
-// Sample: the DeepSeek-OCR 2 abstract (3,873 chars = 767 tokens as text)
-// rendered at 13px so the whole abstract fits ONE 800×800 page (384 tokens, ~2x).
+// Sample: 《端午咸》 — a Chinese prose demo published by DeepSeek
+// (source: https://api-docs.deepseek.com/zh-cn/news/news250528).
+// Measured: 1,036 chars = 804 tokens as text (DeepSeek-V3 tokenizer);
+// at the default 18px the whole essay fits ONE 800x800 page = 384 tokens (~2.1x).
 // Usage: node scripts/render-example.mjs   (run after `npm run build`)
 import fs from 'node:fs'
 import { renderTextPages } from '../lib/render.js'
 
-const SAMPLE = `The human visual system closely mirrors transformer-based vision encoders [14, 16]: foveal fixations function as visual tokens, locally sharp yet globally aware. However, unlike existing encoders that rigidly scan tokens from top-left to bottom-right, human vision follows a causally-driven flow guided by semantic understanding. Consider tracing a spiral - our eye movements follow inherent logic where each subsequent fixation causally depends on previous ones. By analogy, visual tokens in models should be selectively processed with ordering highly contingent on visual semantics rather than spatial coordinates.
-This insight motivates us to fundamentally reconsider the architectural design of vision-language models (VLMs), particularly the encoder component. LLMs are inherently trained on 1D sequential data, while images are 2D structures. Directly flattening image patches in a predefined raster-scan order introduces unwarranted inductive bias that ignores semantic relationships. To address this, we present DeepSeek-OCR 2 with a novel encoder design - DeepEncoder V2 - to advance toward more human-like visual encoding. Following DeepSeek-OCR [54], we adopt document reading as our primary experimental testbed. Documents present rich challenges including complex layout orders, intricate formulas, and tables. These structured elements inherently carry causal visual logic, demanding sophisticated reasoning capabilities that make document OCR an ideal platform for validating our approach.
-Our main contributions are threefold:
-First, we present DeepEncoder V2, featuring several key innovations: (1) we replace the CLIP [37] component in DeepEncoder [54] with a compact LLM [48] architecture, as illustrated in Figure 1, to achieve visual causal flow; (2) to enable parallelized processing, we introduce learnable queries [10], termed causal flow tokens, with visual tokens prepended as a prefix - through a customized attention mask, visual tokens maintain global receptive fields, while causal flow tokens can obtain visual token reordering ability; (3) we maintain equal cardinality between causal and visual tokens (with redundancy such as padding and borders) to provide sufficient capacity for re-fixation; (4) only the causal flow tokens - the latter half of the encoder outputs - are fed to the LLM [24] decoder, enabling cascade causal-aware visual understanding.
-Second, leveraging DeepEncoder V2, we present DeepSeek-OCR 2, which preserves the image compression ratio and decoding efficiency of DeepSeek-OCR while achieving substantial performance improvements. We constrain visual tokens fed to the LLM between 256 and 1120. The lower bound (256) corresponds to DeepSeek-OCR's tokenization of 1024x1024 images, while the upper bound (1120) matches Gemini-3 pro's [44] maximum visual token budget. This design positions DeepSeek-OCR 2 as both a novel VLM architecture for research exploration and a practical tool for generating high-quality training data for LLM pretraining.
-Finally, we provide preliminary validation for employing language model architectures as VLM encoders - a promising pathway toward unified omni-modal encoding. This framework enables feature extraction and token compression across diverse modalities (images, audio, text [28]) by simply configuring modality-specific learnable queries. Crucially, it naturally succeeds to advanced infrastructure optimizations from the LLM community, including Mixture-of-Experts (MoE) architectures, efficient attention mechanisms [26], and so on.
-In summary, we propose DeepEncoder V2 for DeepSeek-OCR 2, employing specialized attention mechanisms to effectively model the causal visual flow of document reading. Compared to the DeepSeek-OCR baseline, DeepSeek-OCR 2 achieves 3.73% performance gains on OmniDocBench v1.5 [34] and yields considerable advances in visual reading logic.
+const SAMPLE = `端午咸
+端午节的节味，最是浓厚不过的。然而我回望故乡，那记忆中的端午气息，竟从一枚咸鸭蛋里，忽地飘散出来了。
+幼时乡间端午的序幕，每每由母亲揭开。她早早寻出那个沉甸甸的粗陶瓮，洗净晾干，再选些青壳鸭蛋，小心擦拭干净，然后一层层密密铺在瓮里。随后用黄泥调了盐，不紧不慢地裹住鸭蛋，如呵护着沉睡的珍宝。这瓮便放置于阴凉之处，只待光阴来点化--母亲常郑重其事地嘱咐道：“日子未到，莫去翻动它。”
+端午前些天，母亲便又忙着准备包粽子。她将青绿如翠玉的粽叶浸在清凉的井水里，糯米也淘洗得粒粒分明，如白玉般剔透。母亲包粽子时手指翻飞如蝶专注得连话也顾不上说了，我则眼巴巴地守在一旁，望着粽叶灵巧地裹起糯米，再被红丝线紧紧系住。那红丝线结结实实地扎紧后，便如一条条红绳串起了一颗颗碧玉心。
+粽子终于下锅蒸煮了，灶间缭绕的蒸汽携着清甜香气，织成一片迷蒙。待到开锅，糯米与粽叶的香便争先恐后喷涌而出，弥漫在整间屋里。母亲解开红丝线，剥开粽叶，粽子便露出糯软晶莹的米身，碧绿中裹着雪白，诱人得很。我急不可耐地咬一口，滚烫的糯米粘在唇齿间，烫得直吸冷气，却又舍不得吐出来。母亲笑着责备我：“急什么，又没人同你争抢！”这时，她往往又递过咸鸭蛋来--蛋黄中央那一小窝温润的红油，此时正缓缓沁溢出来，如朝阳初破云层般，光色融融，温情脉脉。我忙把粽子蘸上红油，那奇妙的咸鲜便裹挟着糯米的清甜，在舌尖上悠悠荡漾开来，既化开了粽子的甜腻，又勾出更深的馋意。
+然而，如今市面上的粽子却愈见整齐划一了：机器统一扎捆的塑料绳冷硬无情，再难寻见粽叶上那根根红丝线曾经系结的情意了。速冻冷藏的粽子，品种琳琅满目，甜咸荤素俱全，却独独不见了那种手作温情的氤氲，更少了那枚咸鸭蛋里沁出的，红油点睛的滋味。
+前些日子，母亲寄来了一箱咸鸭蛋，依然如从前那般细心裹着厚厚黄泥。我郑重地煮好一枚，剖开，那熟悉又久违的油红，便又流溢出来，宛如时光深处封存的一小汪血泪。可不知何故，这油红却凝在了白粥面上，星星点点，只缓缓漂浮着，再不肯化开。
+过去那种滋味，大约也像龙舟的鼓点一样，逐渐隐没在时间的河流深处了。当年母亲亲手系在青粽上的红丝线，如今虽已松脱，但另一端却早结结实实地缠在了人心深处--那是故乡赠予游子唯一一条无形的血脉之线，系着永不霉变的端午咸味。
+原来无论行至何方，人终归是携着一枚无形的咸鸭蛋行走世间的：那蛋黄里封存着故乡的日头，那红油便是岁月熬出的浓稠乡愁--我们以舌上一点咸味，终身辨认着自己灵魂的胎记与来处。
 `
 
-// 13px: whole abstract fits one page. Font size/type mix:
-// - English prose ≈ 5 chars/token as text vs ≈5.9 chars per image token at 18px,
-//   so English gains are modest (~2x at 13px); CJK (1 char ≈ 1 token) gains 4-6x.
-const pages = renderTextPages(SAMPLE, { fontPx: 13 })
+// CJK density: the DeepSeek-V3 tokenizer merges Chinese into ~1.3 chars/token,
+// so 18px pages (≈1,250 chars each) compress ~2-2.5x; 14px or below reaches
+// ~4x. English prose compresses less (~1-2x) — see README.
+const pages = renderTextPages(SAMPLE, { fontPx: 18 })
 if (pages === null || pages.length === 0) throw new Error('renderTextPages returned no pages')
 fs.mkdirSync('assets', { recursive: true })
 fs.writeFileSync('assets/example-page.png', pages[0])
