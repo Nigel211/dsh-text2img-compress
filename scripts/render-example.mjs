@@ -21,8 +21,15 @@ const SAMPLE = `端午咸
 // CJK density: the DeepSeek-V3 tokenizer merges Chinese into ~1.3 chars/token,
 // so 18px pages (≈1,250 chars each) compress ~2-2.5x; 14px or below reaches
 // ~4x. English prose compresses less (~1-2x) — see README.
-const pages = renderTextPages(SAMPLE, { fontPx: 18 })
-if (pages === null || pages.length === 0) throw new Error('renderTextPages returned no pages')
+const pages18 = renderTextPages(SAMPLE, { fontPx: 18 })
+if (pages18 === null || pages18.length === 0) throw new Error('renderTextPages returned no pages')
 fs.mkdirSync('assets', { recursive: true })
-fs.writeFileSync('assets/example-page.png', pages[0])
-console.log(`wrote assets/example-page.png (${pages[0].length} bytes, page 1/${pages.length})`)
+fs.writeFileSync('assets/example-page.png', pages18[0])
+
+// Companion 13px render: same essay at 13px (still one page for this text —
+// the density advantage shows once content fills pages, e.g. ~2,300 chars/page).
+const pages13 = renderTextPages(SAMPLE, { fontPx: 13 })
+if (pages13 !== null && pages13.length > 0) {
+  fs.writeFileSync('assets/example-page-13px.png', pages13[0])
+}
+console.log(`wrote assets/example-page.png (${pages18[0].length} bytes, page 1/${pages18.length}); 13px companion: ${pages13 === null ? 'none' : pages13.length} page(s)`)

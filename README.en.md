@@ -13,14 +13,24 @@ A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin. A 
 
 The image below is 《端午咸》("Duanwu Saltiness"), a Chinese prose demo published by DeepSeek
 ([news250528](https://api-docs.deepseek.com/zh-cn/news/news250528)):
-**1,036 chars = 804 tokens** as text (measured with the DeepSeek-V3 tokenizer); at the default
-**18px the whole essay fits ONE 800×800 page = 384 tokens** (~**2.1×**):
+**1,036 chars = 804 tokens** as text (DeepSeek-V3 tokenizer); at the default **18px the whole essay
+fits ONE 800×800 page = 384 tokens**:
 
-![text2img rendered example page](assets/example-page.png)
+![text2img rendered example page (18px)](assets/example-page.png)
 
-> Note: measured CJK gain is **~2.1× @18px up to ~4× at 14px and below**; **English prose gains
-> ~1–2×** (≈5 chars/token as text vs ≈5.9 chars per image token) — see the measured figures
-> under "How it works".
+Same essay at 13px: ![text2img rendered example page (13px)](assets/example-page-13px.png)
+
+| Content | Text tokens | 13px | 18px |
+| --- | --- | --- | --- |
+| Chinese 《端午咸》 | 804 | 1 page = 384 (**2.1×**) | 1 page = 384 (**2.1×**) |
+| English paper abstract (3,873 chars) | 767 | 1 page = 384 (**2.0×**) | 2 pages = 768 (**0.96×, no gain**) |
+
+> Honest notes:
+> - **English at 18px gains essentially nothing** — English text runs ≈5 chars/token, close to the
+>   ≈5.9 chars per image token at 18px; use 13px (~2×) or plain text for English.
+> - **CJK gains ~2.1–2.5× at 18px**, and the advantage grows with length and smaller fonts
+>   (13px ≈ 2,300 chars/page → ~4.6× on long documents). This essay is only 1,036 chars and does
+>   not fill a page, so 13px and 18px both yield one page — the font-size gap only shows on full pages.
 
 ## How it works
 

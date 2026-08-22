@@ -7,15 +7,23 @@
 
 ## 效果示例
 
-下图即 DeepSeek 官网中文写作示例《端午咸》
-（[news250528](https://api-docs.deepseek.com/zh-cn/news/news250528)）：
-原文 **1,036 字 = 804 token**（DeepSeek-V3 tokenizer 实测）；以默认 **18px 渲染为单张
-800×800 图片后仅计 **384 token**（约 **2.1×**）：
+下图即 DeepSeek 官网中文写作示例《端午咸》（[news250528](https://api-docs.deepseek.com/zh-cn/news/news250528)），
+**1,036 字 = 804 token**（DeepSeek-V3 tokenizer 实测），默认 **18px 渲染为单张 800×800 = 384 token**：
 
-![text2img 渲染示例页](assets/example-page.png)
+![text2img 渲染示例页（18px）](assets/example-page.png)
 
-> 注意：中文实测增益约 **2.1×（18px）~ 4×（14px 及以下）**；**英文正文收益约 1~2×**
-> （英文每 token ≈ 5 字符，图片每 token 装约 5.9 字符）——见"原理"一节的实测数据。
+同文 13px 版：![text2img 渲染示例页（13px）](assets/example-page-13px.png)
+
+| 内容 | 文本 token | 13px | 18px |
+| --- | --- | --- | --- |
+| 中文《端午咸》 | 804 | 1 页 = 384（**2.1×**） | 1 页 = 384（**2.1×**） |
+| 英文论文摘要（3,873 字符） | 767 | 1 页 = 384（**2.0×**） | 2 页 = 768（**0.96×，无收益**） |
+
+> 诚实说明：
+> - **英文 18px 压缩几乎无收益**——英文每 token ≈ 5 字符，与 18px 图片每 token 约 5.9 字符相当；
+>   英文建议 13px（约 2×）或直接用文本；
+> - **中文 18px 约 2.1~2.5×**，且**字数越长、字号越小，中文优势越大**（13px 每页约 2,300 字 → 长篇约 4.6×）；
+>   本文仅 1,036 字、填不满一页，所以 13px 与 18px 同为 1 页——篇幅充足时两种字号的差异才会显现。
 
 一个 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）插件：
 输入框右侧出现「图」开关，开启后，**超过阈值的长消息**在发送给模型前会被自动渲染为
