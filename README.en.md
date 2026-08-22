@@ -23,7 +23,7 @@ Same essay at 13px: ![text2img rendered example page (13px)](assets/example-page
 | Content | Text tokens | 13px | 18px |
 | --- | --- | --- | --- |
 | Chinese 《端午咸》 | 804 | 1 page = 384 (**2.1×**) | 1 page = 384 (**2.1×**) |
-| English paper abstract (3,873 chars) | 767 | 1 page = 384 (**2.0×**) | 2 pages = 768 (**0.96×, no gain**) |
+| English paper introduction (DeepSeek-OCR 2, [arXiv 2601.20552](https://arxiv.org/pdf/2601.20552), 3,873 chars) | 767 | 1 page = 384 (**2.0×**) | 2 pages = 768 (**0.96×, no gain**) |
 | Chinese long text: Lu Xun's《故乡》(public domain) | 3,409 | 3 pages = 1,152 (**3.0×**) | 5 pages = 1,920 (**1.8×**) |
 
 > Direct evidence of the length × font-size effect: for the same Chinese text, the 4,974-char
