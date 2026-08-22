@@ -2,7 +2,10 @@
 
 > **Text-as-image input token compression for DeepSeek Harness** — pack long user messages into text-rendered images so the vision model reads them at **384 tokens per image** instead of thousands of text tokens.
 
-A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin. A **「图」toggle** appears next to the composer's input bar. When enabled, long user messages (≥ threshold, default 600 chars) are rendered into text images (800×800 pages, exactly at the 384-token cap) and sent to the model instead of raw text — the model sees the full content, your token bill drops by **~4–5×**, and the context window budget stretches dramatically.
+A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin. A **「图」toggle** appears next to the composer's input bar. When enabled, long user messages (≥ threshold, default 600 chars) are rendered into text images (800×800 pages, exactly at the 384-token cap) and sent to the model instead of raw text — the model still sees the full content (every character is inside the images), while the input drops from tens of thousands of tokens to a few hundred or thousand. Two direct benefits follow:
+
+- **① input tokens drop ~4–5×, and so does the cost** — the conversation prefix before the message stays byte-identical, so **prompt-cache hits are unaffected**;
+- **② the context-window footprint shrinks dramatically** — the same window can carry dozens of times more content, leaving room for instructions, reasoning steps, and tool results, so long documents no longer get truncated and the model performs more reliably.
 
 [中文 README](./README.md) · [npm](https://www.npmjs.com/package/dsh-text2img-compress)
 
