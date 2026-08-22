@@ -24,6 +24,13 @@ Same essay at 13px: ![text2img rendered example page (13px)](assets/example-page
 | --- | --- | --- | --- |
 | Chinese 《端午咸》 | 804 | 1 page = 384 (**2.1×**) | 1 page = 384 (**2.1×**) |
 | English paper abstract (3,873 chars) | 767 | 1 page = 384 (**2.0×**) | 2 pages = 768 (**0.96×, no gain**) |
+| Chinese long text: Lu Xun's《故乡》(public domain) | 3,409 | 3 pages = 1,152 (**3.0×**) | 5 pages = 1,920 (**1.8×**) |
+
+> Direct evidence of the length × font-size effect: for the same Chinese text, the 4,974-char
+> long piece costs **40% less at 13px than at 18px** (1,920 → 1,152 tokens) — a short essay often
+> does not even fill one page (then 13px and 18px are identical), while **as soon as the content
+> spans multiple pages, page capacity (≈2,300 chars/page at 13px vs ≈1,250 at 18px) is what
+> actually drives the ratio**.
 
 > Honest notes:
 > - **English at 18px gains essentially nothing** — English text runs ≈5 chars/token, close to the
