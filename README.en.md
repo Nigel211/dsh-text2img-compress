@@ -19,7 +19,7 @@ DeepSeek's vision API bills images at a fixed rate (see the official [image unde
 
 So raw text costs *N* tokens, while the same content rendered as 800×800 pages costs **384 per page**.
 
-**Measured (2026-08, `deepseek-v4-flash-vision-exp`, 18px):** the DeepSeek changelog (~9,000+ chars, full of dates, benchmark scores, model names, URLs) rendered to **7 pages ≈ 2,688 tokens vs ~10,000+ as text — about 4–5× compression**. Smaller fonts pack more (16px ≈ 3,000 chars/page → ~8×).
+**Measured (2026-08, `deepseek-v4-flash-vision-exp`, 18px):** the DeepSeek changelog (~9,000+ chars, full of dates, benchmark scores, model names, URLs) rendered to **7 pages ≈ 2,688 tokens vs ~10,000+ as text — about 4–5× compression**. Smaller fonts pack more (16px ≈ 1,600 chars/page, 18px ≈ 1,250 chars/page for CJK); the page cap defaults to **10** (configurable 1–20 in settings).
 
 ## Install
 
@@ -62,7 +62,7 @@ Settings namespace `text2img` (editable in **DSH settings → "文本转图压�
 **⚠️ Not for** (needs exact characters):
 
 - code, config, SQL, JSON — one wrong character breaks everything; keep sending those as text;
-- very long texts (> 10 pages ≈ ~22k chars @18px) — the plugin **falls back to plain text** rather than truncating;
+- very long texts (beyond `maxPages`, default 10 pages ≈ ~13k chars @18px; configurable 1–20) — the plugin **falls back to plain text** rather than truncating;
 - tiny fonts or heavily structured layouts (tables, formulas).
 
 **Accuracy note:** a general vision model is not an OCR engine. Pick the font size for your use case — 18px is the default compromise; use 22px for precision, 16px for maximum savings. Run `bench/` to measure on your own content.
