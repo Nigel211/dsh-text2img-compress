@@ -1,25 +1,23 @@
 // Regenerate assets/example-page.png — the plugin's own renderer output.
+// Sample: the DeepSeek-OCR 2 abstract (3,873 chars = 767 tokens as text)
+// rendered at 13px so the whole abstract fits ONE 800×800 page (384 tokens, ~2x).
 // Usage: node scripts/render-example.mjs   (run after `npm run build`)
 import fs from 'node:fs'
 import { renderTextPages } from '../lib/render.js'
 
-const SAMPLE = `时间: 2026-08-21
-DeepSeek-V4-Flash-Vision-Exp 发布
-今天，全新的多模态视觉理解模型 DeepSeek-V4-Flash-Vision-Exp 上线 DeepSeek API 平台，这是一个实验性质的模型，用户可以通过设置 model='deepseek-v4-flash-vision-exp' 访问该模型。
+const SAMPLE = `The human visual system closely mirrors transformer-based vision encoders [14, 16]: foveal fixations function as visual tokens, locally sharp yet globally aware. However, unlike existing encoders that rigidly scan tokens from top-left to bottom-right, human vision follows a causally-driven flow guided by semantic understanding. Consider tracing a spiral - our eye movements follow inherent logic where each subsequent fixation causally depends on previous ones. By analogy, visual tokens in models should be selectively processed with ordering highly contingent on visual semantics rather than spatial coordinates.
+This insight motivates us to fundamentally reconsider the architectural design of vision-language models (VLMs), particularly the encoder component. LLMs are inherently trained on 1D sequential data, while images are 2D structures. Directly flattening image patches in a predefined raster-scan order introduces unwarranted inductive bias that ignores semantic relationships. To address this, we present DeepSeek-OCR 2 with a novel encoder design - DeepEncoder V2 - to advance toward more human-like visual encoding. Following DeepSeek-OCR [54], we adopt document reading as our primary experimental testbed. Documents present rich challenges including complex layout orders, intricate formulas, and tables. These structured elements inherently carry causal visual logic, demanding sophisticated reasoning capabilities that make document OCR an ideal platform for validating our approach.
+Our main contributions are threefold:
+First, we present DeepEncoder V2, featuring several key innovations: (1) we replace the CLIP [37] component in DeepEncoder [54] with a compact LLM [48] architecture, as illustrated in Figure 1, to achieve visual causal flow; (2) to enable parallelized processing, we introduce learnable queries [10], termed causal flow tokens, with visual tokens prepended as a prefix - through a customized attention mask, visual tokens maintain global receptive fields, while causal flow tokens can obtain visual token reordering ability; (3) we maintain equal cardinality between causal and visual tokens (with redundancy such as padding and borders) to provide sufficient capacity for re-fixation; (4) only the causal flow tokens - the latter half of the encoder outputs - are fed to the LLM [24] decoder, enabling cascade causal-aware visual understanding.
+Second, leveraging DeepEncoder V2, we present DeepSeek-OCR 2, which preserves the image compression ratio and decoding efficiency of DeepSeek-OCR while achieving substantial performance improvements. We constrain visual tokens fed to the LLM between 256 and 1120. The lower bound (256) corresponds to DeepSeek-OCR's tokenization of 1024x1024 images, while the upper bound (1120) matches Gemini-3 pro's [44] maximum visual token budget. This design positions DeepSeek-OCR 2 as both a novel VLM architecture for research exploration and a practical tool for generating high-quality training data for LLM pretraining.
+Finally, we provide preliminary validation for employing language model architectures as VLM encoders - a promising pathway toward unified omni-modal encoding. This framework enables feature extraction and token compression across diverse modalities (images, audio, text [28]) by simply configuring modality-specific learnable queries. Crucially, it naturally succeeds to advanced infrastructure optimizations from the LLM community, including Mixture-of-Experts (MoE) architectures, efficient attention mechanisms [26], and so on.
+In summary, we propose DeepEncoder V2 for DeepSeek-OCR 2, employing specialized attention mechanisms to effectively model the causal visual flow of document reading. Compared to the DeepSeek-OCR baseline, DeepSeek-OCR 2 achieves 3.73% performance gains on OmniDocBench v1.5 [34] and yields considerable advances in visual reading logic.
+`
 
-Terminal Bench 2.1: 83.9
-NL2Repo: 57.7
-DeepSWE: 59.3
-DSBench-Hard: 63.6
-AutomationBench (Public): 25.7
-ApexBench (Pass@1): 36.5
-Agents' Last Exam: 27.3
-Chartography: 64.3
-ZeroBench (Pass@5): 35.0
-
-在纯文本能力（Agent、推理、世界知识等）方面，DeepSeek-V4-Flash-Vision-Exp 与 DeepSeek-V4-Flash 正式版持平。`
-
-const pages = renderTextPages(SAMPLE, { fontPx: 18 })
+// 13px: whole abstract fits one page. Font size/type mix:
+// - English prose ≈ 5 chars/token as text vs ≈5.9 chars per image token at 18px,
+//   so English gains are modest (~2x at 13px); CJK (1 char ≈ 1 token) gains 4-6x.
+const pages = renderTextPages(SAMPLE, { fontPx: 13 })
 if (pages === null || pages.length === 0) throw new Error('renderTextPages returned no pages')
 fs.mkdirSync('assets', { recursive: true })
 fs.writeFileSync('assets/example-page.png', pages[0])

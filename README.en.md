@@ -11,9 +11,15 @@ A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin. A 
 
 ## Example
 
-A rendered page as produced by the plugin (800×800 original, 18px, billed as **384 tokens**):
+The image below is the DeepSeek-OCR 2 abstract ([arXiv 2601.20552](https://arxiv.org/pdf/2601.20552)):
+**3,873 chars = 767 tokens** as text (measured with the DeepSeek-V3 tokenizer); rendered at **13px
+into a single 800×800 page it costs 384 tokens** (~**2×**):
 
 ![text2img rendered example page](assets/example-page.png)
+
+> Note: English prose gains ~1–2× (≈5 chars/token as text vs ≈10 chars per image token at 13px);
+> **CJK text gains 4–6×** (≈1 char/token as text, ≈1,250 chars per 18px page) — see the measured
+> figures under "How it works".
 
 ## How it works
 

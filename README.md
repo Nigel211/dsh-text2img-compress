@@ -7,9 +7,14 @@
 
 ## 效果示例
 
-下图即插件渲染出的文字图片页（800×800 原图，18px，token 计费 = **384**）：
+下图即 DeepSeek-OCR 2 论文摘要（[arXiv 2601.20552](https://arxiv.org/pdf/2601.20552)），
+原文 **3,873 字符 = 767 token**（DeepSeek-V3 tokenizer 实测）；以 **13px 渲染为单张
+800×800 图片后仅计 **384 token**（约 **2×**）：
 
 ![text2img 渲染示例页](assets/example-page.png)
+
+> 注意：**英文正文收益约 1~2×**（英文每 token ≈ 5 字符，13px 图片每 token 装约 10 字符）；
+> **中文长文收益 4~6×**（中文每 token ≈ 1 字符，18px 每页约 1,250 字）——见"原理"一节的实测数据。
 
 一个 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）插件：
 输入框右侧出现「图」开关，开启后，**超过阈值的长消息**在发送给模型前会被自动渲染为
