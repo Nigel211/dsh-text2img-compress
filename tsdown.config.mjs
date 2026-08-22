@@ -1,3 +1,5 @@
+// tsdown config (plain JS — no TS type-stripping or `unrun` loader needed,
+// so the client bundle builds on any Node >= 18).
 const packageId = 'dsh-text2img-compress'
 const externals = ['react']
 
@@ -10,7 +12,7 @@ export default {
   sourcemap: true,
   clean: false,
   external: externals,
-  noExternal: (id: string) => externals.includes(id) ? undefined : true,
+  noExternal: (id) => externals.includes(id) ? undefined : true,
   outputOptions: {
     entryFileNames: 'client.js',
     banner: `window.__ModuleLoader__.load({ id: ${JSON.stringify(packageId)}, factory: (require) => {`,
