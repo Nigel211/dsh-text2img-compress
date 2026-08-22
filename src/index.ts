@@ -14,6 +14,7 @@ export interface Text2ImgValue {
   enabled: boolean
   fontPx: number
   threshold: number
+  maxPages: number
 }
 
 const HINT = '【本条消息的文本已打包为图片发送，请完整阅读图片内容。】'
@@ -30,6 +31,8 @@ export function apply(ctx: Context): void {
       enabled: z.boolean().default(false),
       fontPx: z.number().step(1).min(14).max(28).default(18),
       threshold: z.number().step(1).min(100).default(600),
+      // 1–20：DSH 附件服务单消息上限为 20 张图；10 为保守默认。
+      maxPages: z.number().step(1).min(1).max(20).default(10),
     }),
   )
 
@@ -57,7 +60,7 @@ export function apply(ctx: Context): void {
       }
       try {
         signal.throwIfAborted()
-        const pages = renderTextPages(text, { fontPx: settings.get().fontPx, maxPages: 10 })
+        const pages = renderTextPages(text, { fontPx: settings.get().fontPx, maxPages: settings.get().maxPages })
         if (pages === null || pages.length === 0) {
           // 内容太长（超过页数上限）→ 保持纯文本，绝不截断。
           out.push(message)
