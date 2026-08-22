@@ -29,7 +29,8 @@ export function apply(ctx: Context): void {
     settingsNamespace('text2img'),
     z.object({
       enabled: z.boolean().default(false),
-      fontPx: z.number().step(1).min(14).max(28).default(18),
+      // 12–28，1px 步进：13px 以下更省 token 但识别精度下降，由用户自选。
+      fontPx: z.number().step(1).min(12).max(28).default(18),
       threshold: z.number().step(1).min(100).default(600),
       // 1–20：DSH 附件服务单消息上限为 20 张图；10 为保守默认。
       maxPages: z.number().step(1).min(1).max(20).default(10),

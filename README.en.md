@@ -61,7 +61,7 @@ Restart DSH and refresh the page — the **「图」** button appears at the rig
 ## Usage
 
 1. Click **「图」** — it becomes **「图·开」** (state is persisted via DSH settings; survives restarts);
-2. Optional font size selector next to it: 14/16/18/20/22/24 px (**larger = more readable, fewer chars per page**);
+2. Optional font size selector next to it: **12–28 px in 1px steps** (smaller = more chars per page and up to ~6× for long CJK text, at the cost of readability);
 3. Send text ≥ 600 chars (default) — the chat shows a hint line plus the rendered image pages;
 4. The model reads the images directly; the full original text (including any instruction you wrote, e.g. "复述以下内容：") is inside the images.
 
@@ -70,7 +70,7 @@ Settings namespace `text2img` (editable in **DSH settings → "文本转图压�
 | Field | Default | Range | Meaning |
 | --- | --- | --- | --- |
 | `enabled` | `false` | boolean | master switch (same as the 「图」button) |
-| `fontPx` | `18` | 14–28 | font size: larger = more readable, fewer chars/page |
+| `fontPx` | `18` | 12–28 (1px steps) | font size: larger = more readable, fewer chars/page |
 | `threshold` | `600` | ≥100 | minimum chars to convert; shorter messages stay text |
 | `maxPages` | `10` | 1–20 | max image pages (DSH admits up to 20 images/message); beyond that it falls back to plain text |
 

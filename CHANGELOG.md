@@ -3,6 +3,13 @@
 All notable changes to this project are documented here.
 格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)；版本号遵循 [SemVer](https://semver.org/lang/zh-CN/)。
 
+## [0.1.2] - 2026-08-22
+
+### Changed
+- `fontPx` 范围扩展为 12–28（1px 步进）：支持 13px 等奇数字号（README 对照表与设置项对齐），
+  12–13px 为更省 token 的高压档位（识别精度建议实测）。
+- README 示例节新增中/英文 × 13px/18px 四格对照表，如实标注英文 18px 无收益（0.96×）。
+
 ## [0.1.1] - 2026-08-22
 
 ### Added
