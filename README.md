@@ -40,7 +40,7 @@ DeepSeek 视觉 API 对输入图片有固定计费规则（[官方文档](https:
 
 ```powershell
 # 有 DSH CLI：
-dsh plugin --profile web add dsh-text2img-compress@0.1.0
+dsh plugin --profile web add dsh-text2img-compress@0.1.1
 
 # 或直接 npm 安装：
 npm install dsh-text2img-compress
