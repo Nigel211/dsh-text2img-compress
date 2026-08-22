@@ -20,4 +20,4 @@ jobs:
       - name: Build (host types + client bundle)
         run: npm run build
       - name: Render smoke test (needs a font on CI — Ubuntu ships DejaVu)
-        run: node -e "import('./lib/render.js').then(m => { const pages = m.renderTextPages('text2img smoke test 2026-08-21', { fontPx: 18 }); if (!pages || pages.length === 0) throw new Error('render returned no pages'); console.log('pages:', pages.length); })"
+        run: node scripts/smoke.mjs
