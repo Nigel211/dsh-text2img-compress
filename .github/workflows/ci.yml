@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        # dsh rc packages have crossed peer ranges; the official repo builds with pnpm.
+        run: npm ci --legacy-peer-deps
+      - name: Build (host types + client bundle)
+        run: npm run build
+      - name: Render smoke test (needs a font on CI — Ubuntu ships DejaVu)
+        run: node -e "import('./lib/render.js').then(m => { const pages = m.renderTextPages('text2img smoke test 2026-08-21', { fontPx: 18 }); if (!pages || pages.length === 0) throw new Error('render returned no pages'); console.log('pages:', pages.length); })"
