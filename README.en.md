@@ -25,7 +25,7 @@ So raw text costs *N* tokens, while the same content rendered as 800×800 pages 
 
 ```powershell
 # With the DSH CLI:
-dsh plugin --profile web add dsh-text2img-compress@0.1.0
+dsh plugin --profile web add dsh-text2img-compress@0.1.1
 
 # Or directly:
 npm install dsh-text2img-compress
