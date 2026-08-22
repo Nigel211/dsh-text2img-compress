@@ -1,35 +1,26 @@
-// Regenerate assets/example-page.png — the plugin's own renderer output.
-// Sample: 《端午咸》 — a Chinese prose demo published by DeepSeek
-// (source: https://api-docs.deepseek.com/zh-cn/news/news250528).
-// Measured: 1,036 chars = 804 tokens as text (DeepSeek-V3 tokenizer);
-// at the default 18px the whole essay fits ONE 800x800 page = 384 tokens (~2.1x).
+// Regenerate every README example asset with the plugin's own renderer.
+//   - assets/example-page.png          《端午咸》 @18px (one page, 384 tokens)
+//   - assets/example-guxiang-13px.png  鲁迅《故乡》 @13px page 1/3 (1,152 tokens total)
+//   - assets/example-en-13px.png       DeepSeek-OCR 2 Introduction @13px (one page, 384 tokens)
+// Sample texts live in samples/ (public domain / official DeepSeek demos).
 // Usage: node scripts/render-example.mjs   (run after `npm run build`)
 import fs from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { renderTextPages } from '../lib/render.js'
 
-const SAMPLE = `端午咸
-端午节的节味，最是浓厚不过的。然而我回望故乡，那记忆中的端午气息，竟从一枚咸鸭蛋里，忽地飘散出来了。
-幼时乡间端午的序幕，每每由母亲揭开。她早早寻出那个沉甸甸的粗陶瓮，洗净晾干，再选些青壳鸭蛋，小心擦拭干净，然后一层层密密铺在瓮里。随后用黄泥调了盐，不紧不慢地裹住鸭蛋，如呵护着沉睡的珍宝。这瓮便放置于阴凉之处，只待光阴来点化--母亲常郑重其事地嘱咐道：“日子未到，莫去翻动它。”
-端午前些天，母亲便又忙着准备包粽子。她将青绿如翠玉的粽叶浸在清凉的井水里，糯米也淘洗得粒粒分明，如白玉般剔透。母亲包粽子时手指翻飞如蝶专注得连话也顾不上说了，我则眼巴巴地守在一旁，望着粽叶灵巧地裹起糯米，再被红丝线紧紧系住。那红丝线结结实实地扎紧后，便如一条条红绳串起了一颗颗碧玉心。
-粽子终于下锅蒸煮了，灶间缭绕的蒸汽携着清甜香气，织成一片迷蒙。待到开锅，糯米与粽叶的香便争先恐后喷涌而出，弥漫在整间屋里。母亲解开红丝线，剥开粽叶，粽子便露出糯软晶莹的米身，碧绿中裹着雪白，诱人得很。我急不可耐地咬一口，滚烫的糯米粘在唇齿间，烫得直吸冷气，却又舍不得吐出来。母亲笑着责备我：“急什么，又没人同你争抢！”这时，她往往又递过咸鸭蛋来--蛋黄中央那一小窝温润的红油，此时正缓缓沁溢出来，如朝阳初破云层般，光色融融，温情脉脉。我忙把粽子蘸上红油，那奇妙的咸鲜便裹挟着糯米的清甜，在舌尖上悠悠荡漾开来，既化开了粽子的甜腻，又勾出更深的馋意。
-然而，如今市面上的粽子却愈见整齐划一了：机器统一扎捆的塑料绳冷硬无情，再难寻见粽叶上那根根红丝线曾经系结的情意了。速冻冷藏的粽子，品种琳琅满目，甜咸荤素俱全，却独独不见了那种手作温情的氤氲，更少了那枚咸鸭蛋里沁出的，红油点睛的滋味。
-前些日子，母亲寄来了一箱咸鸭蛋，依然如从前那般细心裹着厚厚黄泥。我郑重地煮好一枚，剖开，那熟悉又久违的油红，便又流溢出来，宛如时光深处封存的一小汪血泪。可不知何故，这油红却凝在了白粥面上，星星点点，只缓缓漂浮着，再不肯化开。
-过去那种滋味，大约也像龙舟的鼓点一样，逐渐隐没在时间的河流深处了。当年母亲亲手系在青粽上的红丝线，如今虽已松脱，但另一端却早结结实实地缠在了人心深处--那是故乡赠予游子唯一一条无形的血脉之线，系着永不霉变的端午咸味。
-原来无论行至何方，人终归是携着一枚无形的咸鸭蛋行走世间的：那蛋黄里封存着故乡的日头，那红油便是岁月熬出的浓稠乡愁--我们以舌上一点咸味，终身辨认着自己灵魂的胎记与来处。
-`
+const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
+const readSample = (name) => fs.readFileSync(path.join(root, 'samples', name), 'utf-8')
 
-// CJK density: the DeepSeek-V3 tokenizer merges Chinese into ~1.3 chars/token,
-// so 18px pages (≈1,250 chars each) compress ~2-2.5x; 14px or below reaches
-// ~4x. English prose compresses less (~1-2x) — see README.
-const pages18 = renderTextPages(SAMPLE, { fontPx: 18 })
-if (pages18 === null || pages18.length === 0) throw new Error('renderTextPages returned no pages')
-fs.mkdirSync('assets', { recursive: true })
-fs.writeFileSync('assets/example-page.png', pages18[0])
+const assets = [
+  { sample: 'duanwu.txt', fontPx: 18, out: 'assets/example-page.png' },
+  { sample: 'guxiang.txt', fontPx: 13, out: 'assets/example-guxiang-13px.png' },
+  { sample: 'deepseek-ocr2-intro.txt', fontPx: 13, out: 'assets/example-en-13px.png' },
+]
 
-// Companion 13px render: same essay at 13px (still one page for this text —
-// the density advantage shows once content fills pages, e.g. ~2,300 chars/page).
-const pages13 = renderTextPages(SAMPLE, { fontPx: 13 })
-if (pages13 !== null && pages13.length > 0) {
-  fs.writeFileSync('assets/example-page-13px.png', pages13[0])
+for (const { sample, fontPx, out } of assets) {
+  const pages = renderTextPages(readSample(sample), { fontPx })
+  if (pages === null || pages.length === 0) throw new Error(`${sample} @${fontPx}px rendered no pages`)
+  fs.writeFileSync(path.join(root, out), pages[0])
+  console.log(`wrote ${out} (page 1/${pages.length}, ${pages[0].length} bytes)`)
 }
-console.log(`wrote assets/example-page.png (${pages18[0].length} bytes, page 1/${pages18.length}); 13px companion: ${pages13 === null ? 'none' : pages13.length} page(s)`)
