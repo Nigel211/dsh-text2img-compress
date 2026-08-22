@@ -60,7 +60,7 @@ DeepSeek 视觉 API 对输入图片有固定计费规则（[官方文档](https:
 
 ```powershell
 # 有 DSH CLI：
-dsh plugin --profile web add dsh-text2img-compress@0.1.2
+dsh plugin --profile web add dsh-text2img-compress@0.1.3
 
 # 或直接 npm 安装：
 npm install dsh-text2img-compress
@@ -74,7 +74,7 @@ npm install dsh-text2img-compress
 ## 使用
 
 1. 点击「图」→ 变为「图·开」（状态持久化，重启不丢）；
-2. 旁边可选字号 12–28px（**1px 步进**；越小越易读上限降低、每页字数越少，10 页上限内最省 token）；
+2. 旁边可选字号 12–22px（**1px 步进**；越小越易读上限降低、每页字数越少，10 页上限内最省 token）；
 3. 发送 **≥ 默认 600 字** 的文本 —— 聊天里显示一条提示 + 文字图片；
 4. 模型直接读取图片内容（图中包含全部原文，含你写的指令，如"复述以下内容："）。
 
@@ -83,7 +83,7 @@ npm install dsh-text2img-compress
 | 字段 | 默认 | 范围 | 含义 |
 | --- | --- | --- | --- |
 | `enabled` | `false` | 布尔 | 总开关（等价于输入框右侧「图」按钮） |
-| `fontPx` | `18` | 12–28（1px 步进） | 字号：越大越易读、每页字数越少 |
+| `fontPx` | `18` | 12–22（1px 步进） | 字号：越大越易读、每页字数越少 |
 | `threshold` | `600` | ≥100 | 最小字符数：更短的消息保持纯文本 |
 | `maxPages` | `10` | 1–20 | 最多图片页数（DSH 附件上限 20 张/消息）；超出自动回退纯文本 |
 

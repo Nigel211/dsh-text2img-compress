@@ -40,7 +40,7 @@ Measured (`deepseek-v4-flash-vision-exp`, 18px): 《端午咸》 **1,036 chars =
 
 ```powershell
 # With the DSH CLI:
-dsh plugin --profile web add dsh-text2img-compress@0.1.2
+dsh plugin --profile web add dsh-text2img-compress@0.1.3
 
 # Or directly:
 npm install dsh-text2img-compress
@@ -51,7 +51,7 @@ Restart DSH and refresh the page — the **「图」** button appears at the rig
 ## Usage
 
 1. Click **「图」** to toggle — state persists across restarts;
-2. Optional font size selector: **12–28 px in 1px steps** (smaller = more chars per page, up to ~6× on long CJK text);
+2. Optional font size selector: **12–22 px in 1px steps** (smaller = more chars per page, up to ~6× on long CJK text);
 3. Send text ≥ 600 chars (default) — the chat shows a hint line plus the rendered image pages;
 4. The model reads the images directly; the full original text is inside them.
 
@@ -60,7 +60,7 @@ Settings namespace `text2img` (editable in **DSH settings → "文本转图压�
 | Field | Default | Range | Meaning |
 | --- | --- | --- | --- |
 | `enabled` | `false` | boolean | master switch (same as the 「图」button) |
-| `fontPx` | `18` | 12–28 (1px steps) | font size: larger = more readable, fewer chars/page |
+| `fontPx` | `18` | 12–22 (1px steps) | font size: larger = more readable, fewer chars/page |
 | `threshold` | `600` | ≥100 | minimum chars to convert; shorter messages stay text |
 | `maxPages` | `10` | 1–20 | max image pages (DSH admits up to 20 images/message); beyond that it falls back to plain text |
 

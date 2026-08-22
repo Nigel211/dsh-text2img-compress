@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)；版本号遵循 [SemVer](https://semver.org/lang/zh-CN/)。
 
+## [0.1.3] - 2026-08-22
+
+### Changed
+- 字号下拉与 schema 范围收窄为 **12–22px**（1px 步进，11 档）：去掉 23–28px 的大字号档位，
+  可读性上限本由 22px 覆盖（对精度敏感的场景建议 22px 或直接文本）。
+
 ## [0.1.2] - 2026-08-22
 
 ### Changed

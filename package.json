@@ -1,6 +1,6 @@
 {
   "name": "dsh-text2img-compress",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "把长文本渲染成图片发送来压缩 LLM 输入 token（DeepSeek 视觉模型、每图 384 token 封顶）— text-as-image token compression for DeepSeek Harness",
   "license": "MIT",
   "keywords": [

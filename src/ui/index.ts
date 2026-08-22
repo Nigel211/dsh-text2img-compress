@@ -12,8 +12,8 @@ export interface Text2ImgValue {
   maxPages: number
 }
 
-// 12–28px，1px 步进（12–13px 更省 token，识别精度建议先行实测）。
-const FONT_SIZES = Array.from({ length: 17 }, (_, index) => 12 + index)
+// 12–22px，1px 步进（12–13px 更省 token，识别精度建议先行实测）。
+const FONT_SIZES = Array.from({ length: 11 }, (_, index) => 12 + index)
 
 const DEFAULT_VALUE: Text2ImgValue = { enabled: false, fontPx: 18, threshold: 600, maxPages: 10 }
 
@@ -21,7 +21,7 @@ function normalize(section: unknown): Text2ImgValue {
   const s = (section ?? {}) as Record<string, unknown>
   return {
     enabled: s.enabled === true,
-    fontPx: typeof s.fontPx === 'number' && s.fontPx >= 12 && s.fontPx <= 28 ? s.fontPx : 18,
+    fontPx: typeof s.fontPx === 'number' && s.fontPx >= 12 && s.fontPx <= 22 ? s.fontPx : 18,
     threshold: typeof s.threshold === 'number' && s.threshold >= 100 ? s.threshold : 600,
     maxPages: typeof s.maxPages === 'number' && s.maxPages >= 1 && s.maxPages <= 20 ? s.maxPages : 10,
   }
