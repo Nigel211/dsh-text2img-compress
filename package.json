@@ -50,7 +50,8 @@
     "lib",
     "LICENSE",
     "cordis.patch.yml",
-    "README.md"
+    "README.md",
+    "README.en.md"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.client.json && node node_modules/tsdown/dist/run.mjs",

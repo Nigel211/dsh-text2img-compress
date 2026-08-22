@@ -3,6 +3,8 @@
 > `dsh-text2img-compress` — 把**长文本渲染成图片**发送给 DeepSeek 视觉模型，
 > 利用 **每张图片 384 token 封顶** 的计费规则压缩输入 token（**text-as-image token compression**）。
 
+[English](./README.en.md) · [npm](https://www.npmjs.com/package/dsh-text2img-compress)
+
 一个 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）插件：
 输入框右侧出现「图」开关，开启后，**超过阈值的长消息**在发送给模型前会被自动渲染为
 文字图片（每张 800×800，恰好吃掉 384 token 上限）；模型看到的输入从上万 token 降到
