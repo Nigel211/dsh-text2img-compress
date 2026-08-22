@@ -5,6 +5,12 @@
 
 [English](./README.en.md) · [npm](https://www.npmjs.com/package/dsh-text2img-compress)
 
+## 效果示例
+
+下图即插件渲染出的文字图片页（800×800 原图，18px，token 计费 = **384**）：
+
+![text2img 渲染示例页](assets/example-page.png)
+
 一个 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）插件：
 输入框右侧出现「图」开关，开启后，**超过阈值的长消息**在发送给模型前会被自动渲染为
 文字图片（每张 800×800，恰好吃掉 384 token 上限）；模型看到的输入从上万 token 降到

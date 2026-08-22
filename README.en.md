@@ -9,6 +9,12 @@ A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin. A 
 
 [中文 README](./README.md) · [npm](https://www.npmjs.com/package/dsh-text2img-compress)
 
+## Example
+
+A rendered page as produced by the plugin (800×800 original, 18px, billed as **384 tokens**):
+
+![text2img rendered example page](assets/example-page.png)
+
 ## How it works
 
 DeepSeek's vision API bills images at a fixed rate (see the official [image understanding guide](https://api-docs.deepseek.com/guides/vision/)):
