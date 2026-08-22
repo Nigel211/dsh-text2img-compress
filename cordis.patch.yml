@@ -1,0 +1,3 @@
+- insert:
+    - id: text2img-compress
+      name: 'dsh-text2img-compress'
